@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="MFLB Kreditprozess-Prototyp mit Mendix-inspirierter Oberfläche und FastAPI-Mock-Backend."
+  />
+  <title>MFLB | Kreditprozess</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell" data-app-shell>
+    <aside id="app-sidebar" class="app-sidebar">
+        <div class="sidebar-brand">
+          <div class="sidebar-brand-mark">M</div>
+          <div class="sidebar-brand-copy">
+            <strong>MFLB Kredit</strong>
+          </div>
+        </div>
+
+      <div class="sidebar-section-title">Navigation</div>
+
+      <nav class="sidebar-nav" aria-label="Ansichten">
+        <button class="nav-item is-active" type="button" data-view-target="kunde" aria-current="page">
+          <span class="nav-item-icon">K</span>
+          <span class="nav-item-copy">
+            <strong>Kundenportal</strong>
+          </span>
+        </button>
+
+        <button class="nav-item" type="button" data-view-target="sachbearbeitung">
+          <span class="nav-item-icon">S</span>
+          <span class="nav-item-copy">
+            <strong>Sachbearbeitung</strong>
+          </span>
+        </button>
+
+        <button class="nav-item" type="button" data-view-target="teamleitung">
+          <span class="nav-item-icon">T</span>
+          <span class="nav-item-copy">
+            <strong>Teamleitung</strong>
+          </span>
+        </button>
+
+        <button class="nav-item" type="button" data-view-target="integration">
+          <span class="nav-item-icon">I</span>
+          <span class="nav-item-copy">
+            <strong>Integration / IT</strong>
+          </span>
+        </button>
+
+        <button class="nav-item" type="button" data-view-target="audit">
+          <span class="nav-item-icon">D</span>
+          <span class="nav-item-copy">
+            <strong>Datenbank / Audit</strong>
+          </span>
+        </button>
+      </nav>
+    </aside>
+
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button
+            class="sidebar-toggle"
+            type="button"
+            data-sidebar-toggle
+            aria-controls="app-sidebar"
+            aria-expanded="true"
+            aria-label="Navigation einklappen"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+        <div class="topbar-right">
+          <div class="topbar-brand-mark">MFLB | Money for Less Bank</div>
+        </div>
+      </header>
+
+      <div class="app-banner" data-connection-banner hidden></div>
+
+      <main class="app-content">
+        <section id="kunde" class="view" aria-labelledby="kunde-title">
+          <div class="page-header">
+            <div>
+              <h2 id="kunde-title">Kundenportal</h2>
+            </div>
+            <div class="page-header-inline">
+              <article class="page-meta">
+                <span class="page-meta-label">Aktiver Fall</span>
+                <strong class="page-meta-value" data-customer-active-inquiry>–</strong>
+              </article>
+              <span class="page-header-status" data-customer-active-status>Bereit</span>
+            </div>
+          </div>
+
+          <div class="view-grid">
+            <div class="stack-large">
+              <form class="card" data-customer-form novalidate>
+                <div class="section-header">
+                  <div>
+                    <h3>Antrag erfassen</h3>
+                  </div>
+                  <span class="status-chip status-chip-info">Website → JSON</span>
+                </div>
+
+                <div class="form-grid">
+                  <label class="field">
+                    <span class="field-label">Vorname</span>
+                    <input class="field-input" type="text" name="firstName" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Nachname</span>
+                    <input class="field-input" type="text" name="lastName" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">E-Mail</span>
+                    <input class="field-input" type="email" name="email" required />
+                  </label>
+                  <label class="field field-span-2">
+                    <span class="field-label">Straße und Hausnummer</span>
+                    <input class="field-input" type="text" name="address" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">PLZ</span>
+                    <input class="field-input" type="text" name="postalCode" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Ort</span>
+                    <input class="field-input" type="text" name="city" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Arbeitgeber</span>
+                    <input class="field-input" type="text" name="employer" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Arbeitgeber-USt-ID</span>
+                    <input class="field-input" type="text" name="employerVatId" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Nettoeinkommen pro Monat</span>
+                    <input class="field-input" type="number" name="monthlyNetIncome" min="1000" step="50" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Beschäftigt seit</span>
+                    <input class="field-input" type="date" name="employedSince" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">IBAN Hausbank</span>
+                    <input class="field-input" type="text" name="iban" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Kreditart</span>
+                    <div class="field-select-wrapper">
+                      <select class="field-select" name="loanType" required>
+                        <option value="Konsumentenkredit">Konsumentenkredit</option>
+                        <option value="Baufinanzierung">Baufinanzierung</option>
+                        <option value="Großkredit">Großkredit</option>
+                      </select>
+                    </div>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Kreditsumme</span>
+                    <input class="field-input" type="number" name="loanAmount" min="1000" step="100" required />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Laufzeit in Monaten</span>
+                    <input class="field-input" type="number" name="termMonths" min="12" step="12" required />
+                  </label>
+                  <label class="field field-span-2">
+                    <span class="field-label">Verwendungszweck</span>
+                    <input class="field-input" type="text" name="purpose" required />
+                  </label>
+                </div>
+
+                <div class="notice-row">
+                  <div class="notice notice-info" data-customer-validation-note></div>
+                  <div class="notice notice-warning" data-customer-collateral-note></div>
+                </div>
+
+                <div class="button-row">
+                    <button class="btn btn-primary" type="submit" data-submit-application>Antrag absenden</button>
+                  <button class="btn btn-secondary" type="button" data-reset-form>Zurücksetzen</button>
+                </div>
+
+                <p class="form-feedback" data-customer-form-feedback aria-live="polite"></p>
+              </form>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Website-JSON</h3>
+                  </div>
+                  <span class="status-chip status-chip-info">JSON</span>
+                </div>
+                <pre class="code-panel" data-customer-json></pre>
+              </article>
+            </div>
+
+            <div class="stack-large">
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Aktueller Fall</h3>
+                  </div>
+                </div>
+                <div class="detail-grid" data-customer-summary></div>
+                <div class="button-row wrap" data-customer-actions></div>
+              </article>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Prozessstatus</h3>
+                  </div>
+                </div>
+                <ol class="timeline" data-customer-timeline></ol>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="sachbearbeitung" class="view" hidden aria-labelledby="sach-title">
+          <div class="page-header">
+            <div>
+              <h2 id="sach-title">Sachbearbeitung</h2>
+            </div>
+            <div class="page-header-inline">
+              <article class="page-meta">
+                <span class="page-meta-label">Ausgewählter Fall</span>
+                <strong class="page-meta-value" data-sach-active-inquiry>–</strong>
+              </article>
+              <span class="page-header-status" data-worklist-count>0 offen</span>
+            </div>
+          </div>
+
+          <div class="view-grid">
+            <article class="card">
+              <div class="section-header">
+                <div>
+                  <h3>Offene Vorgänge</h3>
+                </div>
+              </div>
+
+              <div class="table-shell">
+                <div class="table-head table-worklist-head">
+                  <div class="table-cell">Anfrage-ID</div>
+                  <div class="table-cell">Kunde</div>
+                  <div class="table-cell">Produkt</div>
+                  <div class="table-cell">Status</div>
+                </div>
+                <div class="table-body" data-worklist-table></div>
+              </div>
+            </article>
+
+            <div class="stack-large">
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Fallübersicht</h3>
+                  </div>
+                  <span class="status-chip" data-sach-overall-status>–</span>
+                </div>
+                <div class="detail-grid" data-sach-detail-grid></div>
+              </article>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Routing und Regeln</h3>
+                  </div>
+                </div>
+                <div class="stack" data-sach-routing-panel></div>
+              </article>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Verarbeitung</h3>
+                  </div>
+                </div>
+                <div class="detail-grid detail-grid-compact" data-sach-processing-panel></div>
+                <div class="button-row wrap" data-sach-actions></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="teamleitung" class="view" hidden aria-labelledby="team-title">
+          <div class="page-header">
+            <div>
+              <h2 id="team-title">Teamleitung</h2>
+            </div>
+            <div class="page-header-inline">
+              <article class="page-meta">
+                <span class="page-meta-label">Freigabefall</span>
+                <strong class="page-meta-value" data-team-active-inquiry>–</strong>
+              </article>
+              <span class="page-header-status" data-team-queue-count>0 ausstehend</span>
+            </div>
+          </div>
+
+          <div class="view-grid">
+            <article class="card">
+              <div class="section-header">
+                <div>
+                  <h3>Freigabe-Queue</h3>
+                </div>
+              </div>
+
+              <div class="table-shell">
+                <div class="table-head table-team-head">
+                  <div class="table-cell">Anfrage-ID</div>
+                  <div class="table-cell">Kunde</div>
+                  <div class="table-cell">Scoring</div>
+                  <div class="table-cell">Status</div>
+                </div>
+                <div class="table-body" data-team-queue></div>
+              </div>
+            </article>
+
+            <div class="stack-large">
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Entscheidungsbasis</h3>
+                  </div>
+                  <span class="status-chip" data-team-decision-status>–</span>
+                </div>
+                <div class="detail-grid" data-team-detail-grid></div>
+              </article>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Freigabehinweise</h3>
+                  </div>
+                </div>
+                <div class="stack" data-team-guidance></div>
+              </article>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Entscheidung</h3>
+                  </div>
+                </div>
+                <div class="button-row wrap" data-team-actions></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="integration" class="view" hidden aria-labelledby="integration-title">
+          <div class="page-header">
+            <div>
+              <h2 id="integration-title">Integration / IT</h2>
+            </div>
+            <div class="page-header-inline">
+              <article class="page-meta">
+                <span class="page-meta-label">Technischer Fall</span>
+                <strong class="page-meta-value" data-integration-inquiry>–</strong>
+              </article>
+              <span class="page-header-status" data-integration-technical-status>Bereit</span>
+            </div>
+          </div>
+
+          <div class="view-grid">
+            <div class="stack-large">
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Schnittstellenstatus</h3>
+                  </div>
+                </div>
+                <div class="stack" data-integration-monitor></div>
+              </article>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Systemlog</h3>
+                  </div>
+                </div>
+                <div class="log-list" data-system-log></div>
+              </article>
+            </div>
+
+            <article class="card">
+              <div class="section-header section-header-wrap">
+                <div>
+                  <h3>Transformationen</h3>
+                </div>
+                <div class="tab-row" aria-label="Transformationsansichten">
+                  <button class="tab-button is-active" type="button" data-integration-tab="website">Website JSON</button>
+                  <button class="tab-button" type="button" data-integration-tab="scoringRequest">Scoring Request XML</button>
+                  <button class="tab-button" type="button" data-integration-tab="scoringResponse">Scoring Response XML</button>
+                  <button class="tab-button" type="button" data-integration-tab="rateRequest">Rate Request JSON</button>
+                  <button class="tab-button" type="button" data-integration-tab="rateResponse">Rate Response JSON</button>
+                </div>
+              </div>
+
+              <div class="notice notice-info" data-integration-error-note></div>
+              <div class="panel-label" data-integration-panel-title>Website JSON</div>
+              <pre class="code-panel code-panel-tall" data-integration-code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section id="audit" class="view" hidden aria-labelledby="audit-title">
+          <div class="page-header">
+            <div>
+              <h2 id="audit-title">Datenbank / Audit</h2>
+            </div>
+            <div class="page-header-inline">
+              <span class="page-header-status" data-audit-count>0 Treffer</span>
+            </div>
+          </div>
+
+          <article class="card filter-card">
+            <div class="filter-grid">
+              <label class="field">
+                <span class="field-label">Name</span>
+                <input class="field-input" type="text" data-audit-filter="name" placeholder="Nach Name filtern" />
+              </label>
+              <label class="field">
+                <span class="field-label">Anfrage-ID</span>
+                <input class="field-input" type="text" data-audit-filter="inquiryId" placeholder="Nach Anfrage-ID filtern" />
+              </label>
+              <label class="field">
+                <span class="field-label">Status</span>
+                <div class="field-select-wrapper">
+                  <select class="field-select" data-audit-filter="status">
+                    <option value="alle">Alle</option>
+                    <option value="Eingang">Eingang</option>
+                    <option value="Routing">Routing</option>
+                    <option value="In Prüfung">In Prüfung</option>
+                    <option value="Teamleitung">Teamleitung</option>
+                    <option value="Angebot">Angebot</option>
+                    <option value="Signatur">Signatur</option>
+                    <option value="Abgeschlossen">Abgeschlossen</option>
+                    <option value="Rückfrage">Rückfrage</option>
+                    <option value="Abgelehnt">Abgelehnt</option>
+                  </select>
+                </div>
+              </label>
+            </div>
+          </article>
+
+          <div class="view-grid">
+            <article class="card">
+              <div class="section-header">
+                <div>
+                  <h3>Fälle</h3>
+                </div>
+              </div>
+
+              <div class="table-shell">
+                <div class="table-head table-audit-head">
+                  <div class="table-cell">Anfrage-ID</div>
+                  <div class="table-cell">Kunde</div>
+                  <div class="table-cell">Produkt</div>
+                  <div class="table-cell">Status</div>
+                </div>
+                <div class="table-body" data-audit-table></div>
+              </div>
+            </article>
+
+            <div class="stack-large">
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Falldetails</h3>
+                  </div>
+                </div>
+                <div class="detail-grid" data-audit-detail-grid></div>
+              </article>
+
+              <article class="card">
+                <div class="section-header">
+                  <div>
+                    <h3>Dokumente und Artefakte</h3>
+                  </div>
+                </div>
+                <div class="stack" data-audit-document-panel></div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
