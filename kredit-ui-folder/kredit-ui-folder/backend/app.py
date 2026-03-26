@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 import urllib.request
 import json
 
-N8N_WEBHOOK_URL = "https://fast-automation.de/webhook-test/0d467980-64c6-45ed-9054-7f911ceaffcc"
+N8N_WEBHOOK_URL = "https://fast-automation.de/webhook/0d467980-64c6-45ed-9054-7f911ceaffcc"
 
 from models import ApplicationInput
 from utils import now_iso, build_inquiry_id
@@ -23,6 +23,7 @@ from actions import (
 from seeds import create_seed_applications
 
 BASE_DIR = Path(__file__).resolve().parent
+FRONTEND_DIR = BASE_DIR.parent / "frontend"
 APP_TITLE = "MFLB Kreditprozess Demo"
 
 app = FastAPI(title=APP_TITLE, docs_url="/docs", redoc_url=None)
@@ -36,17 +37,17 @@ app.add_middleware(
 
 @app.get("/")
 def serve_index() -> FileResponse:
-    return FileResponse(BASE_DIR / "index.html")
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 
 @app.get("/styles.css")
 def serve_styles() -> FileResponse:
-    return FileResponse(BASE_DIR / "styles.css")
+    return FileResponse(FRONTEND_DIR / "styles.css")
 
 
 @app.get("/script.js")
 def serve_script() -> FileResponse:
-    return FileResponse(BASE_DIR / "script.js")
+    return FileResponse(FRONTEND_DIR / "script.js")
 
 
 @app.get("/api/bootstrap")
